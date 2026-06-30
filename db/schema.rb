@@ -10,9 +10,68 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_30_111316) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_30_034257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "family_links", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "member_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["member_id"], name: "index_family_links_on_member_id"
+    t.index ["user_id"], name: "index_family_links_on_user_id"
+  end
+
+  create_table "medication_logs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "medication_id", null: false
+    t.string "status"
+    t.datetime "taken_at"
+    t.datetime "updated_at", null: false
+    t.index ["medication_id"], name: "index_medication_logs_on_medication_id"
+  end
+
+  create_table "medications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "dosage"
+    t.string "name"
+    t.string "reminder_time"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_medications_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.string "role"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "solid_cable_messages", force: :cascade do |t|
+    t.binary "channel", null: false
+    t.bigint "channel_hash", null: false
+    t.datetime "created_at", null: false
+    t.binary "payload", null: false
+    t.index ["channel"], name: "index_solid_cable_messages_on_channel"
+    t.index ["channel_hash"], name: "index_solid_cable_messages_on_channel_hash"
+    t.index ["created_at"], name: "index_solid_cable_messages_on_created_at"
+  end
+
+  create_table "solid_queue_blocked_executions", force: :cascade do |t|
+    t.string "concurrency_key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "expires_at", null: false
+    t.bigint "job_id", null: false
+    t.integer "priority", default: 0, null: false
+    t.string "queue_name", null: false
+    t.index ["concurrency_key", "priority", "job_id"], name: "index_solid_queue_blocked_executions_for_release"
+    t.index ["expires_at", "concurrency_key"], name: "index_solid_queue_blocked_executions_for_maintenance"
+    t.index ["job_id"], name: "index_solid_queue_blocked_executions_on_job_id", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -25,4 +84,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_30_111316) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "family_links", "users"
+  add_foreign_key "family_links", "users", column: "member_id"
+  add_foreign_key "medication_logs", "medications"
+  add_foreign_key "medications", "users"
+  add_foreign_key "messages", "users"
 end

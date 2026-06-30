@@ -1,0 +1,11 @@
+<h1>My medications</h1>
+
+<% @medications.each do |medication| %>
+  <div>
+    <p><%= medication.name %></p>
+    <p><%= medication.dosage %></p>
+    <p><%= medication.reminder_time %></p>
+  </div>
+<% end %>
+
+<%= link_to "Add a medication", new_medication_path %>

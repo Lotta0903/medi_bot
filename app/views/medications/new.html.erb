@@ -1,0 +1,8 @@
+<h1>Add a medication</h1>
+
+<%= simple_form_for @medication do |f| %>
+  <%= f.input :name %>
+  <%= f.input :dosage %>
+  <%= f.input :reminder_time %>
+  <%= f.submit %>
+<% end %>
