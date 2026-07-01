@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  resources :medications, only: [:index, :new, :create] do
+  resources :medications, only: [:index, :new, :create, :show] do
     resources :chats, only: [:create]
   end
 
-  resources :chats, only: :show do
-    resources :messages, only: [:create]
+  resources :chats, only: [:show] do
+    resources :chat_messages, only: [:create]
 end
 
   devise_for :users
