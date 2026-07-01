@@ -15,6 +15,7 @@ class ChatMessagesController < ApplicationController
       ruby_llm_chat.with_instructions(instructions)
       response = ruby_llm_chat.ask(@message.content)
       ChatMessage.create(role: "assistant", content: response.content, chat: @chat)
+      @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
     else
       render "chats/show", status: 422

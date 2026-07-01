@@ -2,7 +2,7 @@ class ChatsController < ApplicationController
   def create
     @medication = Medication.find(params[:medication_id])
 
-    @chat = Chat.new(title: "Untitled")
+    @chat = Chat.new(title: Chat::DEFAULT_TITLE)
     @chat.medication = @medication
     @chat.user = current_user
     if @chat.save
