@@ -1,7 +1,7 @@
 class ChatMessagesController < ApplicationController
-  SYSTEM_PROMT = "You are a helpful medical assistant specializing in medicine and geriatric care.
-   I am a eldery patient who seeking help about my medication
-   Help me understand my medication in simple, non-technical language. Answer in simple plain text"
+  SYSTEM_PROMT = "You are a helpful medical assistant specializing in medicine and geriatric care.\n
+   I am a eldery patient who seeking help about my medication.
+   Help me understand my medication in simple, non-technical language.\n Answer in simple plain text.\n"
 
   def create
     @chat = current_user.chats.find(params[:chat_id])
@@ -12,7 +12,7 @@ class ChatMessagesController < ApplicationController
     @message.role = "user"
     if @message.save
       ruby_llm_chat = RubyLLM.chat(model: 'gpt-4.1-nano')
-      ruby_llm_chat.with_instructions(SYSTEM_PROMT)
+      ruby_llm_chat.with_instructions(instructions)
       response = ruby_llm_chat.ask(@message.content)
       ChatMessage.create(role: "assistant", content: response.content, chat: @chat)
       redirect_to chat_path(@chat)
@@ -25,5 +25,13 @@ class ChatMessagesController < ApplicationController
 
   def message_params
     params.require(:chat_message).permit(:content)
+  end
+
+  def medication_name
+    "Here is the name of the medication: #{@medication.name}."
+  end
+
+  def instructions
+    [SYSTEM_PROMT, medication_name].compact.join("\n\n")
   end
 end
