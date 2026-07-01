@@ -1,6 +1,14 @@
-<%= link_to "← #{@chat.medication.name}", medication_path(@chat.medication) %>
+<%= link_to "#{@chat.medication.name}", medication_path(@chat.medication) %>
 
 <h1 id="chat_title"><%= @chat.title %></h1>
+
+<% @chat.chat_messages.each do |message| %>
+  <p>
+    <strong><%= message.role %></strong>
+    <%= message.content %>
+  </p>
+<% end %>
+
 
 <div id="new_message_container">
   <%= simple_form_for [@chat, @message] do |f| %>
