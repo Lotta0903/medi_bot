@@ -6,6 +6,7 @@
     <p><%= medication.dosage %></p>
     <p><%= medication.reminder_time %></p>
   </div>
+  <%= button_to "Ask chatbot", medication_chats_path(medication)%>
 <% end %>
 
 <%= link_to "Add a medication", new_medication_path %>

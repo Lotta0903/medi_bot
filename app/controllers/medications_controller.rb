@@ -3,6 +3,11 @@ class MedicationsController < ApplicationController
     @medications = current_user.medications
   end
 
+  def show
+    @medication = Medication.find(params[:id])
+    @chats = @medication.chats.where(user: current_user)
+  end
+
   def new
     @medication = Medication.new
   end

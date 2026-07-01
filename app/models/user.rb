@@ -4,4 +4,5 @@ class User < ApplicationRecord
 
   has_many :medications, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :chats, dependent: :destroy
 end
