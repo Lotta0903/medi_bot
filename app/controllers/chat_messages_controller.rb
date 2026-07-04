@@ -6,14 +6,15 @@ class ChatMessagesController < ApplicationController
   def create
     @chat = current_user.chats.find(params[:chat_id])
     @medication = @chat.medication
-
     @message = ChatMessage.new(message_params)
     @message.chat = @chat
     @message.role = "user"
+
     if @message.save
-      ruby_llm_chat = RubyLLM.chat(model: 'gpt-4.1-nano')
-      ruby_llm_chat.with_instructions(instructions)
-      response = ruby_llm_chat.ask(@message.content)
+      @ruby_llm_chat = RubyLLM.chat
+      chat_history
+      @ruby_llm_chat.with_instructions(instructions)
+      response = @ruby_llm_chat.ask(@message.content)
       ChatMessage.create(role: "assistant", content: response.content, chat: @chat)
       @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
@@ -34,5 +35,11 @@ class ChatMessagesController < ApplicationController
 
   def instructions
     [SYSTEM_PROMT, medication_name].compact.join("\n\n")
+  end
+
+  def chat_history
+    @chat.chat_messages.each do |message|
+      @ruby_llm_chat.add_message(role: message.role, content: message.content)
+    end
   end
 end

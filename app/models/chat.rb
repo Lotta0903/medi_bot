@@ -14,7 +14,7 @@ class Chat < ApplicationRecord
     first_user_message = chat_messages.where(role: "user").order(:created_at).first
     return if first_user_message.nil?
 
-    response = RubyLLM.chat(model: "gpt-4.1-nano").with_instructions(TITLE_PROMPT).ask(first_user_message.content)
+    response = RubyLLM.chat.with_instructions(TITLE_PROMPT).ask(first_user_message.content)
     update(title: response.content)
   end
 end
