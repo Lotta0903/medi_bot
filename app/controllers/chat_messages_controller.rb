@@ -1,6 +1,6 @@
 class ChatMessagesController < ApplicationController
   SYSTEM_PROMT = "You are a helpful medical assistant specializing in medicine and geriatric care.\n
-   I am a eldery patient who seeking help about my medication.
+   I am a eldery patient who seeking help about my medication.\n
    Help me understand my medication in simple, non-technical language.\n Answer in simple plain text.\n"
 
   def create
@@ -12,8 +12,8 @@ class ChatMessagesController < ApplicationController
 
     if @message.save
       @ruby_llm_chat = RubyLLM.chat
-      chat_history
       @ruby_llm_chat.with_instructions(instructions)
+      chat_history
       response = @ruby_llm_chat.ask(@message.content)
       ChatMessage.create(role: "assistant", content: response.content, chat: @chat)
       @chat.generate_title_from_first_message
