@@ -2,27 +2,10 @@
 
 <h1 id="chat_title"><%= @chat.title %></h1>
 
-  <div id="messages">
-  <% @chat.chat_messages.each do |message| %>
-    <% if message.role == "user" %>
-      <div class="d-flex justify-content-end mb-2">
-        <div class="bg-white px-3 pb-0 pt-3 rounded-pill">
-          <%= (message.content)%>
-        </div>
-      </div>
-    <% elsif message.role == "assistant" %>
-      <div class="d-flex justify-content-start mb-5">
-        <div class="px-3 pb-0 pt-3">
-          <%= (message.content)%>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
+<div id="messages">
+  <%= render "chat_messages/messages", chat_messages: @chat.chat_messages %>
 </div>
 
-<div id="new_message_container">
-  <%= simple_form_for [@chat, @message] do |f| %>
-    <%= f.input :content, label: "Ask a question", required: true, placeholder: "Do yo have any questions?" %>
-    <%= f.button :submit, 'Ask LLM', class: 'btn btn-primary' %>
-  <% end %>
+<div id="new_message">
+ <%= render "chat_messages/form", chat: @chat, message: @message %>
 </div>

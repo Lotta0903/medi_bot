@@ -3,6 +3,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :medications, dependent: :destroy
-  has_many :messages, dependent: :destroy
+  has_many :chat_messages, dependent: :destroy
   has_many :chats, dependent: :destroy
 end
