@@ -1,12 +1,18 @@
-<h1>My medications</h1>
+<div class="mb-5">
+  <h1 class="fw-bold">My medications</h1>
+  <p class="text-muted">Track your treatments and never miss a dose.</p>
+</div>
 
-<% @medications.each do |medication| %>
-  <div>
-    <p><%= medication.name %></p>
-    <p><%= medication.dosage %></p>
-    <p><%= medication.reminder_time %></p>
-  </div>
-  <%= button_to "Ask chatbot", medication_chats_path(medication)%>
-<% end %>
+<div class="row">
+  <% @medications.each do |medication| %>
+    <div class="col-md-4 mb-4">
+      <div class="medication-card">
+        <h5 class="fw-bold mb-2"><%= medication.name %></h5>
+        <p class="text-muted mb-3"><%= medication.dosage %> · <%= medication.reminder_time %></p>
+        <%= button_to "Ask chatbot", medication_chats_path(medication), class: "btn btn-outline-primary btn-sm w-100" %>
+      </div>
+    </div>
+  <% end %>
+</div>
 
-<%= link_to "Add a medication", new_medication_path %>
+<%= link_to "Add a medication", new_medication_path, class: "btn btn-primary mt-3" %>
