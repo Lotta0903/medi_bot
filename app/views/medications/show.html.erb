@@ -14,6 +14,7 @@
           <% @chats.each do |chat| %>
             <div class="medication-card mb-3 py-3 px-4">
               <%= link_to chat.title, chat_path(chat), class: "text-decoration-none" %>
+              <p class="text-muted mb-0 mt-1"><%= chat.created_at.strftime("%d/%m/%Y at %H:%M") %></p>
             </div>
           <% end %>
         <% else %>
