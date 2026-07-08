@@ -10,3 +10,12 @@
 .navbar-lewagon .navbar-brand img {
   width: 40px;
 }
+
+.navbar-brand {
+  font-family: $headers-font;
+  color: $blue;
+}
+
+.navbar-lewagon .nav-link {
+  color: $gray;
+}

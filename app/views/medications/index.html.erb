@@ -1,18 +1,20 @@
-<div class="mb-5">
-  <h1 class="fw-bold">My medications</h1>
-  <p class="text-muted">Track your treatments and never miss a dose.</p>
-</div>
+<div class="container-fluid px-4 py-5">
+  <div class="mb-5">
+    <h1 class="fw-bold">My medications</h1>
+    <p class="text-muted">Track your treatments and never miss a dose.</p>
+  </div>
 
-<div class="row">
-  <% @medications.each do |medication| %>
-    <div class="col-md-4 mb-4">
-      <div class="medication-card">
-        <h5 class="fw-bold mb-2"><%= medication.name %></h5>
-        <p class="text-muted mb-3"><%= medication.dosage %> · <%= medication.reminder_time %></p>
-        <%= button_to "Ask chatbot", medication_chats_path(medication), class: "btn btn-outline-primary btn-sm w-100" %>
+  <div class="row">
+    <% @medications.each do |medication| %>
+      <div class="col-md-4 mb-4">
+        <div class="medication-card">
+          <h5 class="fw-bold mb-2"><%= medication.name %></h5>
+          <p class="text-muted mb-3"><%= medication.dosage %> · <%= medication.reminder_time %></p>
+          <%= button_to "Ask MediBot", medication_chats_path(medication), class: "btn btn-outline-primary btn-sm w-100" %>
+        </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
 
-<%= link_to "Add a medication", new_medication_path, class: "btn btn-primary mt-3" %>
+  <%= link_to "Add a medication", new_medication_path, class: "btn btn-primary mt-3" %>
+</div>
