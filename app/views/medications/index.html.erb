@@ -8,8 +8,7 @@
     <% @medications.each do |medication| %>
       <div class="col-md-4 mb-4">
         <div class="medication-card">
-          <i class="fa-solid fa-capsules"></i>
-          <h5 class="fw-bold mb-2"><%= medication.name %></h5>
+          <h5 class="fw-bold mb-2">💊 <%= medication.name %></h5>
           <p class="text-muted mb-3"><%= medication.dosage %> · <%= medication.reminder_time %></p>
           <%= link_to "View Details", medication_path(medication), class: "btn btn-outline-primary btn-sm w-100" %>
         </div>
