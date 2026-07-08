@@ -10,7 +10,7 @@
         <div class="medication-card">
           <h5 class="fw-bold mb-2">💊 <%= medication.name %></h5>
           <p class="text-muted mb-3"><%= medication.dosage %> · <%= medication.reminder_time %></p>
-          <%= link_to "View Details", medication_path(medication), class: "btn btn-outline-primary btn-sm w-100" %>
+          <%= button_to "View Details", medication_chats_path(medication), class: "btn btn-outline-primary btn-sm w-100" %>
         </div>
       </div>
     <% end %>
