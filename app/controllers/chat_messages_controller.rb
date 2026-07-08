@@ -14,12 +14,26 @@ class ChatMessagesController < ApplicationController
       @ruby_llm_chat = RubyLLM.chat
       @ruby_llm_chat.with_instructions(instructions)
       chat_history
+
       response = @ruby_llm_chat.ask(@message.content)
-      ChatMessage.create(role: "assistant", content: response.content, chat: @chat)
+      @assistant_message = ChatMessage.create(role: "assistant", content: response.content, chat: @chat)
       @chat.generate_title_from_first_message
-      redirect_to chat_path(@chat)
+
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to chat_path(@chat) }
+      end
     else
-      render "chats/show", status: 422
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            :new_message,
+            partial: "chat_messages/form",
+            locals: { chat: @chat, message: @message }
+          )
+        end
+        format.html { render "chats/show", status: 422 }
+      end
     end
   end
 
