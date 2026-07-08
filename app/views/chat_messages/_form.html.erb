@@ -1,4 +1,6 @@
- <%= simple_form_for [chat, message] do |f| %>
+<div class="medication-card mt-4">
+  <%= simple_form_for [chat, message] do |f| %>
     <%= f.input :content, label: "Ask a question", required: true, placeholder: "Do you have any questions?" %>
-    <%= f.button :submit, 'Ask LLM', class: 'btn btn-primary' %>
+    <%= f.button :submit, 'Ask MediBot', class: 'btn btn-primary w-100 mt-2' %>
   <% end %>
+</div>
