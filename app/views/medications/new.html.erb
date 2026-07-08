@@ -4,56 +4,57 @@
 
   <%= simple_form_for @medication do |f| %>
     <div class="mb-4">
-      <%= f.label :name, "Medication name", class: "mb-2 d-block" %>
-      <select name="medication[name]" id="medication_name" class="form-control">
-       <option value="aspirin">Aspirin</option>
-        <option value="paracetamol">Paracetamol</option>
-        <option value="ibuprofen">Ibuprofen</option>
-        <option value="dafalgan">Dafalgan</option>
-        <option value="doliprane">Doliprane</option>
-        <option value="efferalgan">Efferalgan</option>
-        <option value="nurofen">Nurofen</option>
-        <option value="amoxicillin">Amoxicillin</option>
-        <option value="penicillin">Penicillin</option>
-        <option value="augmentin">Augmentin</option>
-        <option value="azithromycin">Azithromycin</option>
-        <option value="ciprofloxacin">Ciprofloxacin</option>
-        <option value="metronidazole">Metronidazole</option>
-        <option value="doxycycline">Doxycycline</option>
-        <option value="vitamin-d">Vitamin D</option>
-        <option value="vitamin-c">Vitamin C</option>
-        <option value="vitamin-b12">Vitamin B12</option>
-        <option value="vitamin-a">Vitamin A</option>
-        <option value="magnesium">Magnesium</option>
-        <option value="zinc">Zinc</option>
-        <option value="iron">Iron</option>
-        <option value="calcium">Calcium</option>
-        <option value="omega-3">Omega 3</option>
-        <option value="folic-acid">Folic Acid</option>
-        <option value="omeprazole">Omeprazole</option>
-        <option value="pantoprazole">Pantoprazole</option>
-        <option value="metformin">Metformin</option>
-        <option value="lisinopril">Lisinopril</option>
-        <option value="atorvastatin">Atorvastatin</option>
-        <option value="levothyroxine">Levothyroxine</option>
-        <option value="amlodipine">Amlodipine</option>
-        <option value="metoprolol">Metoprolol</option>
-        <option value="albuterol">Albuterol</option>
-        <option value="ventoline">Ventoline</option>
-        <option value="prednisone">Prednisone</option>
-        <option value="sertraline">Sertraline</option>
-        <option value="xanax">Xanax</option>
-        <option value="valium">Valium</option>
-        <option value="lexomil">Lexomil</option>
-        <option value="smecta">Smecta</option>
-        <option value="immodium">Immodium</option>
-        <option value="gaviscon">Gaviscon</option>
-        <option value="aerius">Aerius</option>
+      <label class="mb-2 d-block">Medication name</label>
+      <select id="medication_select" class="form-control">
+        <option value="">Select a medication...</option>
+        <option value="Aspirin">Aspirin</option>
+        <option value="Paracetamol">Paracetamol</option>
+        <option value="Ibuprofen">Ibuprofen</option>
+        <option value="Dafalgan">Dafalgan</option>
+        <option value="Doliprane">Doliprane</option>
+        <option value="Efferalgan">Efferalgan</option>
+        <option value="Nurofen">Nurofen</option>
+        <option value="Amoxicillin">Amoxicillin</option>
+        <option value="Penicillin">Penicillin</option>
+        <option value="Augmentin">Augmentin</option>
+        <option value="Azithromycin">Azithromycin</option>
+        <option value="Ciprofloxacin">Ciprofloxacin</option>
+        <option value="Metronidazole">Metronidazole</option>
+        <option value="Doxycycline">Doxycycline</option>
+        <option value="Vitamin D">Vitamin D</option>
+        <option value="Vitamin C">Vitamin C</option>
+        <option value="Vitamin B12">Vitamin B12</option>
+        <option value="Vitamin A">Vitamin A</option>
+        <option value="Magnesium">Magnesium</option>
+        <option value="Zinc">Zinc</option>
+        <option value="Iron">Iron</option>
+        <option value="Calcium">Calcium</option>
+        <option value="Omega 3">Omega 3</option>
+        <option value="Folic Acid">Folic Acid</option>
+        <option value="Omeprazole">Omeprazole</option>
+        <option value="Pantoprazole">Pantoprazole</option>
+        <option value="Metformin">Metformin</option>
+        <option value="Lisinopril">Lisinopril</option>
+        <option value="Atorvastatin">Atorvastatin</option>
+        <option value="Levothyroxine">Levothyroxine</option>
+        <option value="Amlodipine">Amlodipine</option>
+        <option value="Metoprolol">Metoprolol</option>
+        <option value="Albuterol">Albuterol</option>
+        <option value="Ventoline">Ventoline</option>
+        <option value="Prednisone">Prednisone</option>
+        <option value="Sertraline">Sertraline</option>
+        <option value="Xanax">Xanax</option>
+        <option value="Valium">Valium</option>
+        <option value="Lexomil">Lexomil</option>
+        <option value="Smecta">Smecta</option>
+        <option value="Immodium">Immodium</option>
+        <option value="Gaviscon">Gaviscon</option>
+        <option value="Aerius">Aerius</option>
       </select>
     </div>
 
-    <div class="mb-4">
-      <%= f.input :name, label_html: { class: "mb-2 d-block" }, placeholder:  "If other, type medication name" %>
+    <div class="mb-4" id="other_medication_wrapper">
+      <%= f.input :name, label: false, input_html: { id: "medication_name_field" }, placeholder: "If other, type medication name" %>
     </div>
 
     <div class="mb-4">
@@ -68,3 +69,17 @@
   <% end %>
   </div>
 </div>
+
+<script>
+  document.getElementById('medication_select').addEventListener('change', function() {
+    const wrapper = document.getElementById('other_medication_wrapper');
+    const nameField = document.getElementById('medication_name_field');
+    if (this.value === '') {
+      wrapper.style.display = 'block';
+      nameField.value = '';
+    } else {
+      nameField.value = this.value;
+      wrapper.style.display = 'none';
+    }
+  });
+</script>
