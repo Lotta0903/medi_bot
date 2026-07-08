@@ -8,13 +8,17 @@
     <% @medications.each do |medication| %>
       <div class="col-md-4 mb-4">
         <div class="medication-card">
+          <i class="fa-solid fa-capsules"></i>
           <h5 class="fw-bold mb-2"><%= medication.name %></h5>
           <p class="text-muted mb-3"><%= medication.dosage %> · <%= medication.reminder_time %></p>
-          <%= button_to "Ask MediBot", medication_chats_path(medication), class: "btn btn-outline-primary btn-sm w-100" %>
+          <%= link_to "View Details", medication_path(medication), class: "btn btn-outline-primary btn-sm w-100" %>
         </div>
       </div>
     <% end %>
   </div>
 
-  <%= link_to "Add a medication", new_medication_path, class: "btn btn-primary mt-3" %>
+  <%= link_to new_medication_path, class: "btn btn-primary mt-3" do %>
+  Add a medication
+    <i class="fa-solid fa-circle-plus"></i>
+  <% end %>
 </div>
